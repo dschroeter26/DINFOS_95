@@ -314,32 +314,41 @@
           </fieldset>
           <fieldset>
             <legend>Context</legend>
-            <label for="location">Location:</label>
-            <input type="text" id="location" required />
-            <label for="date">Date:</label>
-            <input type="date" id="date" required />
-            <br />
-            <label for="firstSentence">First Sentence:</label>
-            <input type="text" id="firstSentence" required />
-            <br />
-            <label for="secondSentence">Second Sentence:</label>
-            <input type="text" id="secondSentence" required />
-            <br />
-            <label for="photographerBranch">Photographer Branch:</label>
+            <fieldset style="border: none">
+              <label for="location">Location:</label>
+              <input type="text" id="location" required />
+              <label for="date">Date:</label>
+              <input type="date" id="date" required />
+            </fieldset>
+            <fieldset style="border: none">
+              <label for="firstSentence">1st Sentence:</label>
+              <input type="text" id="firstSentence" required />
+            </fieldset>
+            <fieldset style="border: none">
+              <label for="secondSentence">2nd Sentence:</label>
+              <input type="text" id="secondSentence" required />
+            </fieldset>
+            <fieldset style="border: none">
+              <label for="photographerBranch">Photographer Branch:</label>
             <input type="text" id="photographerBranch" required />
             <label for="photographerRankAndName"
               >Photographer Rank and Name:</label
             >
             <input type="text" id="photographerRankAndName" required />
+            </fieldset>
           </fieldset>
-          <br />
-          <button type="button" onclick="generateCaption()">
-            Generate Caption
-          </button>
+          <fieldset style="border: none">
+            <button type="button" onclick="generateCaption()">
+              Generate Caption
+            </button>
+          </fieldset>
         </form>
         <fieldset>
           <legend>Caption</legend>
-          <p id="generatedCaption"></p>
+          <textarea
+            style="width: 100%; height: 100px"
+            id="generatedCaption"
+          ></textarea>
         </fieldset>
       </div>
       <!-- Resize handles -->
@@ -359,7 +368,7 @@
         <button onclick="closeWindow('notepadWindow')">X</button>
       </div>
       <div class="window-body">
-        <textarea style="width: 100%; height: 200px"></textarea>
+        <textarea style="width: 100%; height: 300px"></textarea>
       </div>
     </div>
 
