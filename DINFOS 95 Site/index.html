@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DINFOS 95</title>
+    <style>
+      /* General Reset and Windows 95 Styling */
+      body,
+      input,
+      select,
+      textarea,
+      button {
+        font-family: "MS Sans Serif", Tahoma, Geneva, sans-serif;
+        font-size: 14px;
+      }
+
+      body {
+        background-color: #008080;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 100vh;
+        overflow: hidden;
+        position: relative;
+      }
+
+      .window {
+        background: #c3c7cb;
+        border: 2px solid #000;
+        box-shadow: 2px 2px 0px #000;
+        position: absolute;
+        z-index: 1000;
+      }
+
+      .window-header {
+        background: linear-gradient(to bottom, #fff, #c3c7cb);
+        padding: 2px 4px;
+        border-bottom: 2px solid #000;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        box-shadow: inset 1px 1px #fff, inset -1px -1px #000;
+        height: 20px;
+        cursor: move;
+      }
+
+      .window-title {
+        font-weight: bold;
+      }
+
+      .window-body {
+        padding: 8px;
+        background: #fff;
+      }
+
+      .field-row-stacked label {
+        display: block;
+        margin-bottom: 4px;
+      }
+
+      .field-row-stacked input {
+        width: 100%;
+        padding: 2px;
+        margin-bottom: 8px;
+      }
+
+      .button {
+        padding: 2px 8px;
+        border: 2px solid #000;
+        background: #c3c7cb;
+        cursor: pointer;
+      }
+
+      /* Taskbar Styling */
+      .taskbar {
+        height: 40px;
+        background-color: #c3c7cb;
+        display: flex;
+        align-items: center;
+        padding: 0 5px;
+        box-shadow: inset 0px 1px #fff, inset 0px -1px #000, inset 1px 0px #fff,
+          inset -1px 0px #000;
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+      }
+
+      .start-button {
+        background-color: #c3c7cb;
+        padding: 5px 10px;
+        margin-right: 10px;
+        display: flex;
+        align-items: center;
+        box-shadow: inset 1px 1px #fff, inset -1px -1px #000;
+        font-size: 14px;
+        cursor: pointer;
+      }
+
+      .start-button img {
+        margin-right: 5px;
+      }
+
+      .taskbar-time {
+        margin-left: auto;
+        padding-right: 10px;
+        font-size: 14px;
+      }
+
+      /* Start Menu */
+      .start-menu {
+        position: absolute;
+        bottom: 40px;
+        left: 0;
+        width: 200px;
+        background: #c3c7cb;
+        border: 2px solid #000;
+        box-shadow: 2px 2px 0px #000;
+        display: none;
+        z-index: 1000;
+      }
+
+      .start-menu-section {
+        border-bottom: 1px solid #000;
+      }
+
+      .start-menu-section:last-child {
+        border-bottom: none;
+      }
+
+      .start-menu-item {
+        padding: 5px;
+        cursor: pointer;
+        border-bottom: 1px solid #000;
+      }
+
+      .start-menu-item:last-child {
+        border-bottom: none;
+      }
+
+      .start-menu-item:hover {
+        background-color: #000080;
+        color: white;
+      }
+
+      .start-menu-submenu {
+        display: none;
+        position: absolute;
+        left: 100%;
+        top: 0;
+        background: #c3c7cb;
+        border: 2px solid #000;
+        box-shadow: 2px 2px 0px #000;
+        z-index: 1001;
+      }
+
+      .start-menu-item:hover .start-menu-submenu {
+        display: block;
+      }
+
+      /* Desktop Icons */
+      .desktop-icons {
+        display: flex;
+        flex-wrap: wrap;
+        padding: 10px;
+        margin-top: 20px;
+      }
+
+      .icon {
+        width: 60px;
+        text-align: center;
+        color: white;
+        margin-right: 20px;
+        margin-bottom: 20px;
+        cursor: pointer;
+      }
+
+      .icon img {
+        width: 40px;
+        height: 40px;
+        margin-bottom: 5px;
+      }
+
+      /* Responsive adjustments */
+      @media (max-width: 600px) {
+        .window {
+          width: 90%;
+          left: 5%;
+          top: 10%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Desktop Icons -->
+    <div class="desktop-icons">
+      <div class="icon" onclick="openWindow('formWindow')">
+        <img src="./assets/newspaper.png" alt="Form Icon" />
+        <span>AP Style Caption Editor</span>
+      </div>
+      <div class="icon" onclick="openWindow('notepadWindow')">
+        <img src="./assets/notepad.png" alt="Notepad Icon" />
+        <span>Notepad</span>
+      </div>
+      <div class="icon" onclick="openWindow('aboutWindow')">
+        <img src="./assets/DINFOS.png" alt="About Icon" />
+        <span>About</span>
+      </div>
+    </div>
+
+    <!-- Main Form Window (Initially Hidden) -->
+    <div
+      id="formWindow"
+      class="window"
+      style="display: none; width: 1280px; top: 20%; left: 30%"
+    >
+      <div class="window-header">
+        <span class="window-title">User Information</span>
+        <button onclick="closeWindow('formWindow')">X</button>
+      </div>
+      <div class="window-body">
+        <form id="captionForm">
+          <fieldset>
+            <legend>Person 1</legend>
+            <label for="rank1">Rank:</label>
+            <input type="text" id="rank1" required />
+            <label for="name1">Name:</label>
+            <input type="text" id="name1" required />
+            <label for="unit1">Unit:</label>
+            <input type="text" id="unit1" required />
+            <label for="dutyTitle1">Duty Title:</label>
+            <input type="text" id="dutyTitle1" required />
+            <label for="branch1">Branch:</label>
+            <input type="text" id="branch1" required />
+          </fieldset>
+          <fieldset>
+            <legend>Person 2</legend>
+            <label for="rank2">Rank:</label>
+            <input type="text" id="rank2" required />
+            <label for="name2">Name:</label>
+            <input type="text" id="name2" />
+            <label for="unit2">Unit:</label>
+            <input type="text" id="unit2" />
+            <label for="dutyTitle2">Duty Title:</label>
+            <input type="text" id="dutyTitle2" />
+            <label for="branch2">Branch:</label>
+            <input type="text" id="branch2" />
+          </fieldset>
+          <fieldset>
+            <legend>Person 3</legend>
+            <label for="rank3">Rank:</label>
+            <input type="text" id="rank3" required />
+            <label for="name3">Name:</label>
+            <input type="text" id="name3" />
+            <label for="unit3">Unit:</label>
+            <input type="text" id="unit3" />
+            <label for="dutyTitle3">Duty Title:</label>
+            <input type="text" id="dutyTitle3" />
+            <label for="branch3">Branch:</label>
+            <input type="text" id="branch3" />
+          </fieldset>
+          <fieldset>
+            <legend>Person 4</legend>
+            <label for="rank4">Rank:</label>
+            <input type="text" id="rank4" required />
+            <label for="name4">Name:</label>
+            <input type="text" id="name4" />
+            <label for="unit4">Unit:</label>
+            <input type="text" id="unit4" />
+            <label for="dutyTitle4">Duty Title:</label>
+            <input type="text" id="dutyTitle4" />
+            <label for="branch4">Branch:</label>
+            <input type="text" id="branch4" />
+          </fieldset>
+          <label for="location">Location:</label>
+          <input type="text" id="location" required />
+          <label for="date">Date:</label>
+          <input type="date" id="date" required />
+          <label for="firstSentence">First Sentence:</label>
+          <input type="text" id="firstSentence" required />
+          <label for="secondSentence">Second Sentence:</label>
+          <input type="text" id="secondSentence" required />
+          <label for="photographerBranch">Photographer Branch:</label>
+          <input type="text" id="photographerBranch" required />
+          <label for="photographerRankAndName"
+            >Photographer Rank and Name:</label
+          >
+          <input type="text" id="photographerRankAndName" required />
+          <button type="button" onclick="generateCaption()">
+            Generate Caption
+          </button>
+        </form>
+        <h2>Generated Caption:</h2>
+        <p id="generatedCaption"></p>
+      </div>
+    </div>
+
+    <!-- Notepad Window -->
+    <div
+      id="notepadWindow"
+      class="window"
+      style="display: none; width: 300px; top: 20%; left: 40%"
+    >
+      <div class="window-header">
+        <span class="window-title">Notepad</span>
+        <button onclick="closeWindow('notepadWindow')">X</button>
+      </div>
+      <div class="window-body">
+        <textarea style="width: 100%; height: 200px"></textarea>
+      </div>
+    </div>
+
+    <!-- About Window -->
+    <div
+      id="aboutWindow"
+      class="window"
+      style="display: none; width: 300px; top: 20%; left: 50%"
+    >
+      <div class="window-header">
+        <span class="window-title">About</span>
+        <button onclick="closeWindow('aboutWindow')">X</button>
+      </div>
+      <div class="window-body">
+        <p>Welcome to DINFOS. Enjoy!</p>
+      </div>
+    </div>
+
+    <!-- Taskbar -->
+    <div class="taskbar">
+      <div class="start-button" onclick="toggleStartMenu()">
+        <img src="./assets/windows.png" alt="Start" width="20" />
+        Start
+      </div>
+      <div class="taskbar-time" id="time"></div>
+    </div>
+
+    <!-- Start Menu -->
+    <div id="startMenu" class="start-menu">
+      <div class="start-menu-section">
+        <div class="start-menu-item">
+          Programs
+          <div class="start-menu-submenu">
+            <div class="start-menu-item" onclick="openWindow('formWindow')">
+              AP Style Caption Editor
+            </div>
+            <div class="start-menu-item" onclick="openWindow('notepadWindow')">
+              Notepad
+            </div>
+          </div>
+        </div>
+        <div class="start-menu-item">Documents</div>
+        <div class="start-menu-item">Settings</div>
+        <div class="start-menu-item">Find</div>
+      </div>
+      <div class="start-menu-section">
+        <div class="start-menu-item">Help</div>
+        <div class="start-menu-item">Run</div>
+      </div>
+      <div class="start-menu-section">
+        <div class="start-menu-item" onclick="alert('Shutting down...')">
+          Shutdown
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Function to open a window
+      function openWindow(windowId) {
+        document.getElementById(windowId).style.display = "block";
+      }
+
+      // Function to close a window
+      function closeWindow(windowId) {
+        document.getElementById(windowId).style.display = "none";
+      }
+
+      // Function to toggle the start menu
+      function toggleStartMenu() {
+        const startMenu = document.getElementById("startMenu");
+        startMenu.style.display =
+          startMenu.style.display === "block" ? "none" : "block";
+      }
+
+      // Function to update the time in the taskbar
+      function updateTime() {
+        const now = new Date();
+        const hours = now.getHours() % 12 || 12;
+        const minutes = now.getMinutes().toString().padStart(2, "0");
+        const ampm = now.getHours() >= 12 ? "PM" : "AM";
+        document.getElementById(
+          "time"
+        ).textContent = `${hours}:${minutes} ${ampm}`;
+      }
+
+      setInterval(updateTime, 1000);
+      updateTime();
+
+      // Drag and Drop functionality for windows
+      document.querySelectorAll(".window").forEach((window) => {
+        let offsetX,
+          offsetY,
+          mouseDown = false;
+
+        const header = window.querySelector(".window-header");
+
+        header.addEventListener("mousedown", (e) => {
+          mouseDown = true;
+          offsetX = e.clientX - window.offsetLeft;
+          offsetY = e.clientY - window.offsetTop;
+        });
+
+        document.addEventListener("mouseup", () => (mouseDown = false));
+
+        document.addEventListener("mousemove", (e) => {
+          if (mouseDown) {
+            window.style.left = `${e.clientX - offsetX}px`;
+            window.style.top = `${e.clientY - offsetY}px`;
+          }
+        });
+      });
+
+      function generateCaption() {
+        const ranks = [
+          document.getElementById("rank1").value,
+          document.getElementById("rank2").value,
+          document.getElementById("rank3").value,
+          document.getElementById("rank4").value,
+        ];
+
+        const names = [
+          document.getElementById("name1").value,
+          document.getElementById("name2").value,
+          document.getElementById("name3").value,
+          document.getElementById("name4").value,
+        ];
+
+        const units = [
+          document.getElementById("unit1").value,
+          document.getElementById("unit2").value,
+          document.getElementById("unit3").value,
+          document.getElementById("unit4").value,
+        ];
+
+        const dutyTitles = [
+          document.getElementById("dutyTitle1").value,
+          document.getElementById("dutyTitle2").value,
+          document.getElementById("dutyTitle3").value,
+          document.getElementById("dutyTitle4").value,
+        ];
+
+        const branches = [
+          document.getElementById("branch1").value,
+          document.getElementById("branch2").value,
+          document.getElementById("branch3").value,
+          document.getElementById("branch4").value,
+        ];
+
+        const location = document.getElementById("location").value;
+        const firstSentence = document.getElementById("firstSentence").value;
+        const secondSentence = document.getElementById("secondSentence").value;
+        const photographerBranch =
+          document.getElementById("photographerBranch").value;
+        const photographerRankAndName = document.getElementById(
+          "photographerRankAndName"
+        ).value;
+
+        const date = new Date(document.getElementById("date").value);
+
+        const monthAbbrev = [
+          "Jan.",
+          "Feb.",
+          "Mar.",
+          "Apr.",
+          "Jun.",
+          "Jul.",
+          "Aug.",
+          "Sep.",
+          "Oct.",
+          "Nov.",
+          "Dec.",
+        ];
+
+        let caption = "";
+
+        names.forEach((name, index) => {
+          if (name) {
+            caption += ` ${branches[index]} ${ranks[index]} ${name}, ${
+              units[index]
+            } ${dutyTitles[index].toLowerCase()}, `;
+          }
+        });
+
+        caption = caption.slice(0, -1); // Remove last comma
+        caption += ` ${firstSentence} on ${location}, ${
+          monthAbbrev[date.getMonth()]
+        } ${date.getDay()}`;
+
+        if (new Date().getFullYear() === date.getFullYear()) {
+          caption += `. `;
+        } else {
+          caption += `, ${date.getFullYear()}. `;
+        }
+
+        caption += `${secondSentence}. (${photographerBranch} photo by ${photographerRankAndName})`;
+
+        document.getElementById("generatedCaption").textContent = caption;
+      }
+
+      /**
+       * U.S. Air Force Maj. Jason Forcey, 354th Munitions Squadron commander, briefs U.S. Air Force Gen. Anthony Cotton, Commander,
+       * United States Strategic Command, on the 354th MUNS mission during his visit at Eielson Air Force Base, Alaska, Aug. 8, 2024.
+       * The visit allowed Cotton to gain a deeper understanding of the challenges Eielson encounters to effectively project airpower globally.
+       * (U.S. Air Force photo by Airman 1st Class Spencer Hanson)
+       */
+    </script>
+  </body>
+</html>
