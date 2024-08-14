@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>DINFOS 95</title>
     <style>
+      /* Caption Form Styling */
+      #firstSentence,
+      #secondSentence {
+        width: 50%;
+      }
       /* General Reset and Windows 95 Styling */
       body,
       input,
@@ -191,6 +196,39 @@
           top: 10%;
         }
       }
+      /* Resize handle styles */
+      .resize-handle {
+        position: absolute;
+        background: #000;
+        z-index: 1001;
+      }
+
+      /* South-East (bottom-right) corner */
+      .resize-handle-se {
+        width: 10px;
+        height: 10px;
+        right: 0;
+        bottom: 0;
+        cursor: se-resize;
+      }
+
+      /* South (bottom) edge */
+      .resize-handle-s {
+        height: 5px;
+        width: 100%;
+        bottom: 0;
+        left: 0;
+        cursor: s-resize;
+      }
+
+      /* East (right) edge */
+      .resize-handle-e {
+        width: 5px;
+        height: 100%;
+        top: 0;
+        right: 0;
+        cursor: e-resize;
+      }
     </style>
   </head>
   <body>
@@ -224,6 +262,8 @@
         <form id="captionForm">
           <fieldset>
             <legend>Person 1</legend>
+            <label for="branch1">Branch:</label>
+            <input type="text" id="branch1" required />
             <label for="rank1">Rank:</label>
             <input type="text" id="rank1" required />
             <label for="name1">Name:</label>
@@ -232,11 +272,11 @@
             <input type="text" id="unit1" required />
             <label for="dutyTitle1">Duty Title:</label>
             <input type="text" id="dutyTitle1" required />
-            <label for="branch1">Branch:</label>
-            <input type="text" id="branch1" required />
           </fieldset>
           <fieldset>
             <legend>Person 2</legend>
+            <label for="branch2">Branch:</label>
+            <input type="text" id="branch2" />
             <label for="rank2">Rank:</label>
             <input type="text" id="rank2" required />
             <label for="name2">Name:</label>
@@ -245,11 +285,11 @@
             <input type="text" id="unit2" />
             <label for="dutyTitle2">Duty Title:</label>
             <input type="text" id="dutyTitle2" />
-            <label for="branch2">Branch:</label>
-            <input type="text" id="branch2" />
           </fieldset>
           <fieldset>
             <legend>Person 3</legend>
+            <label for="branch3">Branch:</label>
+            <input type="text" id="branch3" />
             <label for="rank3">Rank:</label>
             <input type="text" id="rank3" required />
             <label for="name3">Name:</label>
@@ -258,11 +298,11 @@
             <input type="text" id="unit3" />
             <label for="dutyTitle3">Duty Title:</label>
             <input type="text" id="dutyTitle3" />
-            <label for="branch3">Branch:</label>
-            <input type="text" id="branch3" />
           </fieldset>
           <fieldset>
             <legend>Person 4</legend>
+            <label for="branch4">Branch:</label>
+            <input type="text" id="branch4" />
             <label for="rank4">Rank:</label>
             <input type="text" id="rank4" required />
             <label for="name4">Name:</label>
@@ -271,30 +311,41 @@
             <input type="text" id="unit4" />
             <label for="dutyTitle4">Duty Title:</label>
             <input type="text" id="dutyTitle4" />
-            <label for="branch4">Branch:</label>
-            <input type="text" id="branch4" />
           </fieldset>
-          <label for="location">Location:</label>
-          <input type="text" id="location" required />
-          <label for="date">Date:</label>
-          <input type="date" id="date" required />
-          <label for="firstSentence">First Sentence:</label>
-          <input type="text" id="firstSentence" required />
-          <label for="secondSentence">Second Sentence:</label>
-          <input type="text" id="secondSentence" required />
-          <label for="photographerBranch">Photographer Branch:</label>
-          <input type="text" id="photographerBranch" required />
-          <label for="photographerRankAndName"
-            >Photographer Rank and Name:</label
-          >
-          <input type="text" id="photographerRankAndName" required />
+          <fieldset>
+            <legend>Context</legend>
+            <label for="location">Location:</label>
+            <input type="text" id="location" required />
+            <label for="date">Date:</label>
+            <input type="date" id="date" required />
+            <br />
+            <label for="firstSentence">First Sentence:</label>
+            <input type="text" id="firstSentence" required />
+            <br />
+            <label for="secondSentence">Second Sentence:</label>
+            <input type="text" id="secondSentence" required />
+            <br />
+            <label for="photographerBranch">Photographer Branch:</label>
+            <input type="text" id="photographerBranch" required />
+            <label for="photographerRankAndName"
+              >Photographer Rank and Name:</label
+            >
+            <input type="text" id="photographerRankAndName" required />
+          </fieldset>
+          <br />
           <button type="button" onclick="generateCaption()">
             Generate Caption
           </button>
         </form>
-        <h2>Generated Caption:</h2>
-        <p id="generatedCaption"></p>
+        <fieldset>
+          <legend>Caption</legend>
+          <p id="generatedCaption"></p>
+        </fieldset>
       </div>
+      <!-- Resize handles -->
+      <div class="resize-handle resize-handle-se"></div>
+      <div class="resize-handle resize-handle-s"></div>
+      <div class="resize-handle resize-handle-e"></div>
     </div>
 
     <!-- Notepad Window -->
@@ -507,7 +558,6 @@
 
         document.getElementById("generatedCaption").textContent = caption;
       }
-      
 
       /**
        * U.S. Air Force Maj. Jason Forcey, 354th Munitions Squadron commander, briefs U.S. Air Force Gen. Anthony Cotton, Commander,
@@ -515,6 +565,53 @@
        * The visit allowed Cotton to gain a deeper understanding of the challenges Eielson encounters to effectively project airpower globally.
        * (U.S. Air Force photo by Airman 1st Class Spencer Hanson)
        */
+
+      // Function to enable resizing
+      function enableResizing(windowId) {
+        const windowElement = document.getElementById(windowId);
+        const seHandle = windowElement.querySelector(".resize-handle-se");
+        const sHandle = windowElement.querySelector(".resize-handle-s");
+        const eHandle = windowElement.querySelector(".resize-handle-e");
+
+        let isResizing = false;
+        let currentHandle;
+
+        seHandle.addEventListener("mousedown", (e) => startResizing(e, "se"));
+        sHandle.addEventListener("mousedown", (e) => startResizing(e, "s"));
+        eHandle.addEventListener("mousedown", (e) => startResizing(e, "e"));
+
+        function startResizing(e, handleType) {
+          e.preventDefault();
+          isResizing = true;
+          currentHandle = handleType;
+          document.addEventListener("mousemove", resize);
+          document.addEventListener("mouseup", stopResizing);
+        }
+
+        function resize(e) {
+          if (!isResizing) return;
+
+          const rect = windowElement.getBoundingClientRect();
+
+          if (currentHandle === "se") {
+            windowElement.style.width = `${e.clientX - rect.left}px`;
+            windowElement.style.height = `${e.clientY - rect.top}px`;
+          } else if (currentHandle === "s") {
+            windowElement.style.height = `${e.clientY - rect.top}px`;
+          } else if (currentHandle === "e") {
+            windowElement.style.width = `${e.clientX - rect.left}px`;
+          }
+        }
+
+        function stopResizing() {
+          isResizing = false;
+          document.removeEventListener("mousemove", resize);
+          document.removeEventListener("mouseup", stopResizing);
+        }
+      }
+
+      // Enable resizing for the form window
+      enableResizing("formWindow");
     </script>
   </body>
 </html>
