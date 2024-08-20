@@ -263,9 +263,24 @@
           <fieldset>
             <legend>Person 1</legend>
             <label for="branch1">Branch:</label>
-            <input type="text" id="branch1" required />
+            <select
+              id="branch1"
+              required
+              onchange="toggleRankField('branch1', 'rank1')"
+            >
+              <option value="" selected>Select Branch</option>
+              <option value="U.S. Air Force">U.S. Air Force</option>
+              <option value="U.S. Navy">U.S. Navy</option>
+              <option value="U.S. Marine Corps">U.S. Marine Corps</option>
+              <option value="U.S. Army">U.S. Army</option>
+              <option value="U.S. Space Force">U.S. Space Force</option>
+              <option value="U.S. Coast Guard">U.S. Coast Guard</option>
+            </select>
             <label for="rank1">Rank:</label>
-            <input type="text" id="rank1" required />
+            <select id="rank1" name="rank" disabled>
+              <option value="" selected>Select Rank</option>
+              <!-- Add options for ranks here -->
+            </select>
             <label for="name1">Name:</label>
             <input type="text" id="name1" required />
             <label for="unit1">Unit:</label>
@@ -276,9 +291,24 @@
           <fieldset>
             <legend>Person 2</legend>
             <label for="branch2">Branch:</label>
-            <input type="text" id="branch2" />
+            <select
+              id="branch2"
+              required
+              onchange="toggleRankField('branch2', 'rank2')"
+            >
+              <option value="" selected>Select Branch</option>
+              <option value="U.S. Air Force">U.S. Air Force</option>
+              <option value="U.S. Navy">U.S. Navy</option>
+              <option value="U.S. Marine Corps">U.S. Marine Corps</option>
+              <option value="U.S. Army">U.S. Army</option>
+              <option value="U.S. Space Force">U.S. Space Force</option>
+              <option value="U.S. Coast Guard">U.S. Coast Guard</option>
+            </select>
             <label for="rank2">Rank:</label>
-            <input type="text" id="rank2" required />
+            <select id="rank2" name="rank" disabled>
+              <option value="" selected>Select Rank</option>
+              <!-- Add options for ranks here -->
+            </select>
             <label for="name2">Name:</label>
             <input type="text" id="name2" />
             <label for="unit2">Unit:</label>
@@ -289,9 +319,24 @@
           <fieldset>
             <legend>Person 3</legend>
             <label for="branch3">Branch:</label>
-            <input type="text" id="branch3" />
+            <select
+              id="branch3"
+              required
+              onchange="toggleRankField('branch3', 'rank3')"
+            >
+              <option value="" selected>Select Branch</option>
+              <option value="U.S. Air Force">U.S. Air Force</option>
+              <option value="U.S. Navy">U.S. Navy</option>
+              <option value="U.S. Marine Corps">U.S. Marine Corps</option>
+              <option value="U.S. Army">U.S. Army</option>
+              <option value="U.S. Space Force">U.S. Space Force</option>
+              <option value="U.S. Coast Guard">U.S. Coast Guard</option>
+            </select>
             <label for="rank3">Rank:</label>
-            <input type="text" id="rank3" required />
+            <select id="rank3" name="rank" disabled>
+              <option value="" selected>Select Rank</option>
+              <!-- Add options for ranks here -->
+            </select>
             <label for="name3">Name:</label>
             <input type="text" id="name3" />
             <label for="unit3">Unit:</label>
@@ -302,9 +347,24 @@
           <fieldset>
             <legend>Person 4</legend>
             <label for="branch4">Branch:</label>
-            <input type="text" id="branch4" />
+            <select
+              id="branch4"
+              required
+              onchange="toggleRankField('branch4', 'rank4')"
+            >
+              <option value="" selected>Select Branch</option>
+              <option value="U.S. Air Force">U.S. Air Force</option>
+              <option value="U.S. Navy">U.S. Navy</option>
+              <option value="U.S. Marine Corps">U.S. Marine Corps</option>
+              <option value="U.S. Army">U.S. Army</option>
+              <option value="U.S. Space Force">U.S. Space Force</option>
+              <option value="U.S. Coast Guard">U.S. Coast Guard</option>
+            </select>
             <label for="rank4">Rank:</label>
-            <input type="text" id="rank4" required />
+            <select id="rank4" name="rank" disabled>
+              <option value="" selected>Select Rank</option>
+              <!-- Add options for ranks here -->
+            </select>
             <label for="name4">Name:</label>
             <input type="text" id="name4" />
             <label for="unit4">Unit:</label>
@@ -321,20 +381,20 @@
               <input type="date" id="date" required />
             </fieldset>
             <fieldset style="border: none">
-              <label for="firstSentence">1st Sentence:</label>
-              <input type="text" id="firstSentence" required />
+              <label for="firstSentence">What they were doing:</label>
+              <textarea type="text" id="firstSentence" required></textarea>
             </fieldset>
             <fieldset style="border: none">
-              <label for="secondSentence">2nd Sentence:</label>
-              <input type="text" id="secondSentence" required />
+              <label for="secondSentence">Why they were doing it:</label>
+              <textarea type="text" id="secondSentence" required></textarea>
             </fieldset>
             <fieldset style="border: none">
               <label for="photographerBranch">Photographer Branch:</label>
-            <input type="text" id="photographerBranch" required />
-            <label for="photographerRankAndName"
-              >Photographer Rank and Name:</label
-            >
-            <input type="text" id="photographerRankAndName" required />
+              <input type="text" id="photographerBranch" required />
+              <label for="photographerRankAndName"
+                >Photographer Rank and Name:</label
+              >
+              <input type="text" id="photographerRankAndName" required />
             </fieldset>
           </fieldset>
           <fieldset style="border: none">
@@ -481,6 +541,217 @@
         });
       });
 
+      //form validation
+      const ranksByBranch = {
+        "U.S. Air Force": [
+          { grade: "E-1", rank: "Airman Basic", specialDuty: "" },
+          { grade: "E-2", rank: "Airman", specialDuty: "" },
+          { grade: "E-3", rank: "Airman First Class", specialDuty: "" },
+          { grade: "E-4", rank: "Senior Airman", specialDuty: "" },
+          { grade: "E-5", rank: "Staff Sergeant", specialDuty: "" },
+          { grade: "E-6", rank: "Technical Sergeant", specialDuty: "" },
+          {
+            grade: "E-7",
+            rank: "Master Sergeant",
+            specialDuty: "First Sergeant",
+          },
+          {
+            grade: "E-8",
+            rank: "Senior Master Sergeant",
+            specialDuty: "First Sergeant",
+          },
+          {
+            grade: "E-9",
+            rank: "Chief Master Sergeant",
+            specialDuty: "Command Chief Master Sergeant",
+          },
+          { grade: "O-1", rank: "Second Lieutenant", specialDuty: "" },
+          { grade: "O-2", rank: "First Lieutenant", specialDuty: "" },
+          { grade: "O-3", rank: "Captain", specialDuty: "" },
+          { grade: "O-4", rank: "Major", specialDuty: "" },
+          { grade: "O-5", rank: "Lieutenant Colonel", specialDuty: "" },
+          { grade: "O-6", rank: "Colonel", specialDuty: "" },
+          { grade: "O-7", rank: "Brigadier General", specialDuty: "" },
+          { grade: "O-8", rank: "Major General", specialDuty: "" },
+          { grade: "O-9", rank: "Lieutenant General", specialDuty: "" },
+          { grade: "O-10", rank: "General", specialDuty: "" },
+        ],
+        "U.S. Navy": [
+          { grade: "E-1", rank: "Seaman Recruit", specialDuty: "" },
+          { grade: "E-2", rank: "Seaman Apprentice", specialDuty: "" },
+          { grade: "E-3", rank: "Seaman", specialDuty: "" },
+          { grade: "E-4", rank: "Petty Officer Third Class", specialDuty: "" },
+          { grade: "E-5", rank: "Petty Officer Second Class", specialDuty: "" },
+          { grade: "E-6", rank: "Petty Officer First Class", specialDuty: "" },
+          { grade: "E-7", rank: "Chief Petty Officer", specialDuty: "" },
+          { grade: "E-8", rank: "Senior Chief Petty Officer", specialDuty: "" },
+          {
+            grade: "E-9",
+            rank: "Master Chief Petty Officer",
+            specialDuty: "Command Master Chief",
+          },
+          { grade: "O-1", rank: "Ensign", specialDuty: "" },
+          { grade: "O-2", rank: "Lieutenant Junior Grade", specialDuty: "" },
+          { grade: "O-3", rank: "Lieutenant", specialDuty: "" },
+          { grade: "O-4", rank: "Lieutenant Commander", specialDuty: "" },
+          { grade: "O-5", rank: "Commander", specialDuty: "" },
+          { grade: "O-6", rank: "Captain", specialDuty: "" },
+          { grade: "O-7", rank: "Rear Admiral (Lower Half)", specialDuty: "" },
+          { grade: "O-8", rank: "Rear Admiral (Upper Half)", specialDuty: "" },
+          { grade: "O-9", rank: "Vice Admiral", specialDuty: "" },
+          { grade: "O-10", rank: "Admiral", specialDuty: "" },
+        ],
+        "U.S. Marine Corps": [
+          { grade: "E-1", rank: "Private", specialDuty: "" },
+          { grade: "E-2", rank: "Private First Class", specialDuty: "" },
+          { grade: "E-3", rank: "Lance Corporal", specialDuty: "" },
+          { grade: "E-4", rank: "Corporal", specialDuty: "" },
+          { grade: "E-5", rank: "Sergeant", specialDuty: "" },
+          {
+            grade: "E-6",
+            rank: "Staff Sergeant",
+            specialDuty: "Drill Instructor",
+          },
+          { grade: "E-7", rank: "Gunnery Sergeant", specialDuty: "" },
+          {
+            grade: "E-8",
+            rank: "Master Sergeant",
+            specialDuty: "First Sergeant",
+          },
+          {
+            grade: "E-9",
+            rank: "Sergeant Major",
+            specialDuty: "Sergeant Major of the Marine Corps",
+          },
+          { grade: "O-1", rank: "Second Lieutenant", specialDuty: "" },
+          { grade: "O-2", rank: "First Lieutenant", specialDuty: "" },
+          { grade: "O-3", rank: "Captain", specialDuty: "" },
+          { grade: "O-4", rank: "Major", specialDuty: "" },
+          { grade: "O-5", rank: "Lieutenant Colonel", specialDuty: "" },
+          { grade: "O-6", rank: "Colonel", specialDuty: "" },
+          { grade: "O-7", rank: "Brigadier General", specialDuty: "" },
+          { grade: "O-8", rank: "Major General", specialDuty: "" },
+          { grade: "O-9", rank: "Lieutenant General", specialDuty: "" },
+          { grade: "O-10", rank: "General", specialDuty: "" },
+        ],
+        "U.S. Army": [
+          { grade: "E-1", rank: "Private", specialDuty: "" },
+          { grade: "E-2", rank: "Private", specialDuty: "" },
+          { grade: "E-3", rank: "Private First Class", specialDuty: "" },
+          { grade: "E-4", rank: "Specialist", specialDuty: "" },
+          { grade: "E-5", rank: "Sergeant", specialDuty: "" },
+          { grade: "E-6", rank: "Staff Sergeant", specialDuty: "" },
+          { grade: "E-7", rank: "Sergeant First Class", specialDuty: "" },
+          {
+            grade: "E-8",
+            rank: "Master Sergeant",
+            specialDuty: "First Sergeant",
+          },
+          {
+            grade: "E-9",
+            rank: "Sergeant Major",
+            specialDuty: "Command Sergeant Major",
+          },
+          { grade: "O-1", rank: "Second Lieutenant", specialDuty: "" },
+          { grade: "O-2", rank: "First Lieutenant", specialDuty: "" },
+          { grade: "O-3", rank: "Captain", specialDuty: "" },
+          { grade: "O-4", rank: "Major", specialDuty: "" },
+          { grade: "O-5", rank: "Lieutenant Colonel", specialDuty: "" },
+          { grade: "O-6", rank: "Colonel", specialDuty: "" },
+          { grade: "O-7", rank: "Brigadier General", specialDuty: "" },
+          { grade: "O-8", rank: "Major General", specialDuty: "" },
+          { grade: "O-9", rank: "Lieutenant General", specialDuty: "" },
+          { grade: "O-10", rank: "General", specialDuty: "" },
+        ],
+        "U.S. Space Force": [
+          { grade: "E-1", rank: "Specialist 1", specialDuty: "" },
+          { grade: "E-2", rank: "Specialist 2", specialDuty: "" },
+          { grade: "E-3", rank: "Specialist 3", specialDuty: "" },
+          { grade: "E-4", rank: "Specialist 4", specialDuty: "" },
+          { grade: "E-5", rank: "Sergeant", specialDuty: "" },
+          { grade: "E-6", rank: "Technical Sergeant", specialDuty: "" },
+          {
+            grade: "E-7",
+            rank: "Master Sergeant",
+            specialDuty: "First Sergeant",
+          },
+          {
+            grade: "E-8",
+            rank: "Senior Master Sergeant",
+            specialDuty: "First Sergeant",
+          },
+          {
+            grade: "E-9",
+            rank: "Chief Master Sergeant",
+            specialDuty: "Chief Master Sergeant of the Space Force",
+          },
+          { grade: "O-1", rank: "Second Lieutenant", specialDuty: "" },
+          { grade: "O-2", rank: "First Lieutenant", specialDuty: "" },
+          { grade: "O-3", rank: "Captain", specialDuty: "" },
+          { grade: "O-4", rank: "Major", specialDuty: "" },
+          { grade: "O-5", rank: "Lieutenant Colonel", specialDuty: "" },
+          { grade: "O-6", rank: "Colonel", specialDuty: "" },
+          { grade: "O-7", rank: "Brigadier General", specialDuty: "" },
+          { grade: "O-8", rank: "Major General", specialDuty: "" },
+          { grade: "O-9", rank: "Lieutenant General", specialDuty: "" },
+          { grade: "O-10", rank: "General", specialDuty: "" },
+        ],
+        "U.S. Coast Guard": [
+          { grade: "E-1", rank: "Seaman Recruit", specialDuty: "" },
+          { grade: "E-2", rank: "Seaman Apprentice", specialDuty: "" },
+          { grade: "E-3", rank: "Seaman", specialDuty: "" },
+          { grade: "E-4", rank: "Petty Officer Third Class", specialDuty: "" },
+          { grade: "E-5", rank: "Petty Officer Second Class", specialDuty: "" },
+          { grade: "E-6", rank: "Petty Officer First Class", specialDuty: "" },
+          { grade: "E-7", rank: "Chief Petty Officer", specialDuty: "" },
+          { grade: "E-8", rank: "Senior Chief Petty Officer", specialDuty: "" },
+          {
+            grade: "E-9",
+            rank: "Master Chief Petty Officer",
+            specialDuty: "Command Master Chief",
+          },
+          { grade: "O-1", rank: "Ensign", specialDuty: "" },
+          { grade: "O-2", rank: "Lieutenant Junior Grade", specialDuty: "" },
+          { grade: "O-3", rank: "Lieutenant", specialDuty: "" },
+          { grade: "O-4", rank: "Lieutenant Commander", specialDuty: "" },
+          { grade: "O-5", rank: "Commander", specialDuty: "" },
+          { grade: "O-6", rank: "Captain", specialDuty: "" },
+          { grade: "O-7", rank: "Rear Admiral (Lower Half)", specialDuty: "" },
+          { grade: "O-8", rank: "Rear Admiral (Upper Half)", specialDuty: "" },
+          { grade: "O-9", rank: "Vice Admiral", specialDuty: "" },
+          { grade: "O-10", rank: "Admiral", specialDuty: "" },
+        ],
+      };
+
+      function toggleRankField(branchFieldId, rankFieldId) {
+        var branchSelect = document.getElementById(branchFieldId);
+        var rankSelect = document.getElementById(rankFieldId);
+
+        // Clear existing options
+        rankSelect.innerHTML =
+          '<option value="" selected disabled>Select Rank</option>';
+
+        if (branchSelect.value) {
+          rankSelect.disabled = false;
+
+          // Populate ranks based on selected branch
+          ranksByBranch[branchSelect.value].forEach(
+            ({ grade, rank, specialDuty }) => {
+              var option = document.createElement("option");
+              option.value = rank; // Set rank name as value
+              option.textContent = `${grade}: ${rank}`;
+              rankSelect.appendChild(option);
+            }
+          );
+        } else {
+          rankSelect.disabled = true;
+        }
+      }
+
+      document
+        .getElementById("branch1")
+        .addEventListener("change", populateRanks);
+
       function generateCaption() {
         const ranks = [
           document.getElementById("rank1").value,
@@ -568,12 +839,8 @@
         document.getElementById("generatedCaption").textContent = caption;
       }
 
-      /**
-       * U.S. Air Force Maj. Jason Forcey, 354th Munitions Squadron commander, briefs U.S. Air Force Gen. Anthony Cotton, Commander,
-       * United States Strategic Command, on the 354th MUNS mission during his visit at Eielson Air Force Base, Alaska, Aug. 8, 2024.
-       * The visit allowed Cotton to gain a deeper understanding of the challenges Eielson encounters to effectively project airpower globally.
-       * (U.S. Air Force photo by Airman 1st Class Spencer Hanson)
-       */
+      const exampleCaption =
+        "U.S. Air Force Maj. Jason Forcey, 354th Munitions Squadron commander, briefs U.S. Air Force Gen. Anthony Cotton, Commander, United States Strategic Command, on the 354th MUNS mission during his visit at Eielson Air Force Base, Alaska, Aug. 8, 2024. The visit allowed Cotton to gain a deeper understanding of the challenges Eielson encounters to effectively project airpower globally. (U.S. Air Force photo by Airman 1st Class Spencer Hanson)";
 
       // Function to enable resizing
       function enableResizing(windowId) {
